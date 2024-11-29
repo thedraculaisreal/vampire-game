@@ -2,13 +2,15 @@
 
 struct entity create_entity()
 {
-    struct entity black;
-    black.health = 25;
-    black.damage = 10;
-    return black;
+    struct entity ent;
+    ent.health = 100;
+    ent.damage = 10;
+    return ent;
 };
 
 void print_entity(struct entity ent)
 {
-    printf("Entity_Health:%d\nEntity_damage:%d\n", ent.health, ent.damage);
+    printf("entity_health = %d\entity_damage = %d\n", ent.health, ent.damage);
+    printf("The entity attacks itself, entity loses health\n");
+    printf("entity_new_health = %d\n", ent.health -= ent.damage);
 };

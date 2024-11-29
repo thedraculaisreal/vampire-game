@@ -1,1 +1,0 @@
-/usr/bin/cc -Wl,--dependency-file,CMakeFiles/executable.dir/link.d CMakeFiles/executable.dir/source/main.c.o CMakeFiles/executable.dir/source/entity.c.o -o executable

@@ -1,3 +1,0 @@
-/home/schwarztoter/projects/random/black/build/CMakeFiles/executable.dir
-/home/schwarztoter/projects/random/black/build/CMakeFiles/edit_cache.dir
-/home/schwarztoter/projects/random/black/build/CMakeFiles/rebuild_cache.dir

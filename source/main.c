@@ -2,7 +2,7 @@
 
 int main()
 {
-    struct entity black = create_entity();
-    print_entity(black);
+    struct entity ent = create_entity();
+    print_entity(ent);
     return 0;
 }
