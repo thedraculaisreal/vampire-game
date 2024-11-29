@@ -1,6 +1,7 @@
 #include "entity.h"
+#include "raylib.h"
 
-int main()
+int main(void)
 {
     struct entity ent = create_entity("vampie");
     struct entity ent2 = create_entity("human");
