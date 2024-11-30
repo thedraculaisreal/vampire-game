@@ -1,8 +1,9 @@
 cmake_minimum_required(VERSION 3.31.1)
 set(PROJECT_NAME black)
 project(${PROJECT_NAME})
-add_executable(${PROJECT_NAME} source/main.c source/entity.c)
+add_executable(${PROJECT_NAME} source/core/main.c source/entity/entity.c source/core/keypress.c)
 include(FetchContent)
+find_package(X11 REQUIRED)
 set(RAYLIB_VERSION 5.5)
 FetchContent_Declare(
     raylib
@@ -12,3 +13,4 @@ FetchContent_Declare(
 set (BUILD_EXAMPLES OFF CASHE INTERNAL "")
 FetchContent_MakeAvailable(raylib)
 target_link_libraries(${PROJECT_NAME} raylib)
+target_link_libraries(${PROJECT_NAME} ${X11_LIBRARIES})
