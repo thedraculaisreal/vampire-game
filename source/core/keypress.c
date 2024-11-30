@@ -38,7 +38,7 @@ void init_keystrokes(void)
 	    switch(keysym)
 	    {
 		case XK_Left:
-		    ent.pos = move_entity()
+		    //ent.pos = move_entity()
 		    break;
 
 		case XK_Right:

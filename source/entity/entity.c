@@ -1,15 +1,13 @@
 #include "entity.h"
 
-struct entity create_entity(const char* name, Vector2 pos)
+void create_entity(struct entity ent, const char* name, Vector2 pos)
 {
     const Vector2 size = {100, 100};
-    struct entity ent;
     ent.name = name;
     ent.health = 100;
     ent.damage = 10;
     ent.pos = pos;
     ent.size = size;
-    return ent;
 };
 
 void draw_entity(struct entity ent)
