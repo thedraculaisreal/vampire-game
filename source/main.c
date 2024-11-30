@@ -1,26 +1,50 @@
 #include "entity.h"
-#include "raylib.h"
+#include <unistd.h>
+
+void init_raylib(void);
 
 int main(void)
 {
-    InitWindow(1800, 900, "vampire-game");
 
-    while(!WindowShouldClose())
-    {
-	BeginDrawing();
-	ClearBackground(WHITE);
-	DrawText("First window", 400, 200, 12, RED);
-	EndDrawing();
-    }
-
-    CloseWindow();
+    init_raylib();
 
     return 0;
 }
 
+void init_raylib(void)
+{
+    Vector2 pos1 = { 200, 200};
+    Vector2 pos2 = { 700, 200};
 
-/*struct entity ent = create_entity("vampie");
-struct entity ent2 = create_entity("human");
-print_entity(ent);
-ent.health = take_damage(ent, ent2);
-print_entity(ent);*/
+    // Create entitys
+    struct entity ent = create_entity("xyo", pos1);
+    struct entity ent2 = create_entity("himothy", pos2);
+
+    // variables for window and rectangles
+    const int window_width = 1400;
+    const int window_height = 800;
+    const char* window_name = "kill-himothy-game";
+
+    // raylib initialization.
+    InitWindow(window_width, window_height, window_name);
+
+    while(!WindowShouldClose())
+    {
+	BeginDrawing();
+	ClearBackground(BLACK); // background color
+	draw_entity(ent); // draw entities to screen
+	draw_entity(ent2);
+	if (!is_alive(ent))
+	{
+	    break;
+	}
+	if (!is_alive(ent2))
+	{
+	    break;
+	}
+	EndDrawing();
+    }
+
+    // cleanup
+    CloseWindow();
+}
