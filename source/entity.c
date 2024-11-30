@@ -21,6 +21,11 @@ void draw_entity(struct entity ent)
     DrawText(ent.name, ent.pos.x + 20, ent.pos.y + 20, 20, WHITE);
 };
 
+float move_entity(struct entity ent, float x)
+{
+    return ent.pos.x + x;
+}
+
 int take_damage(struct entity ent, struct entity ent2)
 {
     return ent.health -= ent2.damage;
