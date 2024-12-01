@@ -1,4 +1,4 @@
-#include "../entity/entity.h"
+#include "game.h"
 #include <unistd.h>
 #include <pthread.h>
 
@@ -14,15 +14,11 @@ void init_raylib(void)
 {
     const Vector2 pos1 = { 200, 200};
     const Vector2 pos2 = { 700, 200};
-    static const Vector2 right_move = {4 , 0};
-    static const Vector2 left_move = {-4 , 0};
-    static const Vector2 up_move = {0 , -4};
-    static const Vector2 down_move = {0 , 4};
     struct entity entity_human;
     struct entity entity_vampire;
     Rectangle box_collision = { 0 };
     bool collision = false;
-    SetTargetFPS(250); // set game fps.
+    SetTargetFPS(60); // set game fps.
 
     // Create entitys
     entity_vampire = create_entity("vampire", pos1);
@@ -38,50 +34,9 @@ void init_raylib(void)
 
     while(!WindowShouldClose())
     {
-	Rectangle vampire_rect;
-	vampire_rect.x = entity_vampire.pos.x;
-	vampire_rect.y = entity_vampire.pos.y;
-	vampire_rect.height = entity_vampire.size.y;
-	vampire_rect.width = entity_vampire.size.x;
-	Rectangle human_rect;
-	human_rect.x = entity_human.pos.x;
-	human_rect.y = entity_human.pos.y;
-	human_rect.height = entity_human.size.y;
-	human_rect.width = entity_human.size.x;
-
-	if (CheckCollisionRecs(vampire_rect, human_rect))
-	{
-	    collision = true;
-	}
-	else
-	{
-	    collision = false;
-	}
-	if (IsKeyDown(KEY_RIGHT))
-	{
-	    entity_vampire.pos = move_entity(entity_vampire, right_move);
-	}
-	if (IsKeyDown(KEY_LEFT))
-	{
-	    entity_vampire.pos = move_entity(entity_vampire, left_move);
-	}
-	if (IsKeyDown(KEY_UP))
-	{
-	    entity_vampire.pos = move_entity(entity_vampire, up_move);
-	}
-	if (IsKeyDown(KEY_DOWN))
-	{
-	    entity_vampire.pos = move_entity(entity_vampire, down_move);
-	}
-
-	if (!is_alive(entity_vampire))
-	{
-	    break;
-	}
-	if (!is_alive(entity_human))
-	{
-	    break;
-	}
+	collision = check_collision(entity_vampire, entity_human); // collision checks
+	entity_vampire.pos = movement(collision, entity_vampire.pos); // takes keyboard input
+	if (!is_alive(entity_vampire) || !is_alive(entity_human)) break; // check if alive
 
 	BeginDrawing();
 	ClearBackground(BLACK); // background color
