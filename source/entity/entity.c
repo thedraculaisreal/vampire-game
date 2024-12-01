@@ -2,8 +2,8 @@
 
 struct entity create_entity(const char* name, Vector2 pos)
 {
-    const Vector2 size = {100, 100};
     struct entity ent;
+    const Vector2 size = { 100, 100};
     ent.name = name;
     ent.health = 100;
     ent.damage = 10;

@@ -14,12 +14,15 @@ void init_raylib(void)
 {
     const Vector2 pos1 = { 200, 200};
     const Vector2 pos2 = { 700, 200};
-    static const Vector2 right_move = {.01 , 0};
-    static const Vector2 left_move = {-0.01 , 0};
-    static const Vector2 up_move = {0 , -0.01};
-    static const Vector2 down_move = {0 , 0.01};
+    static const Vector2 right_move = {4 , 0};
+    static const Vector2 left_move = {-4 , 0};
+    static const Vector2 up_move = {0 , -4};
+    static const Vector2 down_move = {0 , 4};
     struct entity entity_human;
     struct entity entity_vampire;
+    Rectangle box_collision = { 0 };
+    bool collision = false;
+    SetTargetFPS(250); // set game fps.
 
     // Create entitys
     entity_vampire = create_entity("vampire", pos1);
@@ -35,6 +38,25 @@ void init_raylib(void)
 
     while(!WindowShouldClose())
     {
+	Rectangle vampire_rect;
+	vampire_rect.x = entity_vampire.pos.x;
+	vampire_rect.y = entity_vampire.pos.y;
+	vampire_rect.height = entity_vampire.size.y;
+	vampire_rect.width = entity_vampire.size.x;
+	Rectangle human_rect;
+	human_rect.x = entity_human.pos.x;
+	human_rect.y = entity_human.pos.y;
+	human_rect.height = entity_human.size.y;
+	human_rect.width = entity_human.size.x;
+
+	if (CheckCollisionRecs(vampire_rect, human_rect))
+	{
+	    collision = true;
+	}
+	else
+	{
+	    collision = false;
+	}
 	if (IsKeyDown(KEY_RIGHT))
 	{
 	    entity_vampire.pos = move_entity(entity_vampire, right_move);
@@ -65,6 +87,14 @@ void init_raylib(void)
 	ClearBackground(BLACK); // background color
 	draw_entity(entity_vampire); // draw entities to screen
 	draw_entity(entity_human);
+	if (collision)
+	{
+	    DrawText("Collision = true", 400, 20, 20, WHITE);
+	}
+	else
+	{
+	    DrawText("Collision = false", 400, 20, 20, WHITE);
+	}
 
 	EndDrawing();
     }
