@@ -1,32 +1,29 @@
 #include "../entity/entity.h"
-#include "keypress.h"
 #include <unistd.h>
 #include <pthread.h>
 
 void init_raylib(void);
 
-void* keypress_thread()
-{
-    init_keystrokes();
-}
-
 int main(void)
 {
-    pthread_t thread_id;
-    pthread_create(&thread_id, NULL, keypress_thread, NULL);
-    pthread_detach(thread_id);
     init_raylib();
     return 0;
 }
 
 void init_raylib(void)
 {
-    Vector2 pos1 = { 200, 200};
-    Vector2 pos2 = { 700, 200};
+    const Vector2 pos1 = { 200, 200};
+    const Vector2 pos2 = { 700, 200};
+    static const Vector2 right_move = {.01 , 0};
+    static const Vector2 left_move = {-0.01 , 0};
+    static const Vector2 up_move = {0 , -0.01};
+    static const Vector2 down_move = {0 , 0.01};
+    struct entity entity_human;
+    struct entity entity_vampire;
 
     // Create entitys
-    create_entity(entity_vampire ,"vampire", pos1);
-    create_entity(entity_human ,"human", pos2);
+    entity_vampire = create_entity("vampire", pos1);
+    entity_human = create_entity("human", pos2);
 
     // variables for window and rectangles
     const int window_width = 1400;
@@ -38,10 +35,23 @@ void init_raylib(void)
 
     while(!WindowShouldClose())
     {
-	BeginDrawing();
-	ClearBackground(BLACK); // background color
-	draw_entity(entity_vampire); // draw entities to screen
-	draw_entity(entity_human);
+	if (IsKeyDown(KEY_RIGHT))
+	{
+	    entity_vampire.pos = move_entity(entity_vampire, right_move);
+	}
+	if (IsKeyDown(KEY_LEFT))
+	{
+	    entity_vampire.pos = move_entity(entity_vampire, left_move);
+	}
+	if (IsKeyDown(KEY_UP))
+	{
+	    entity_vampire.pos = move_entity(entity_vampire, up_move);
+	}
+	if (IsKeyDown(KEY_DOWN))
+	{
+	    entity_vampire.pos = move_entity(entity_vampire, down_move);
+	}
+
 	if (!is_alive(entity_vampire))
 	{
 	    break;
@@ -50,6 +60,12 @@ void init_raylib(void)
 	{
 	    break;
 	}
+
+	BeginDrawing();
+	ClearBackground(BLACK); // background color
+	draw_entity(entity_vampire); // draw entities to screen
+	draw_entity(entity_human);
+
 	EndDrawing();
     }
 
