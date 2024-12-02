@@ -28,9 +28,9 @@ Vector2 move_entity(struct entity ent, Vector2 move)
     return ent.pos;
 }
 
-int take_damage(struct entity ent, struct entity ent2)
+int take_damage(struct entity ent, int damage)
 {
-    return ent.health -= ent2.damage;
+    return ent.health -= damage;
 };
 
 bool is_alive(struct entity ent)

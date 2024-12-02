@@ -12,6 +12,6 @@ struct entity
 
 struct entity create_entity(const char* name, Vector2 pos);
 void draw_entity(struct entity ent);
-int take_damage(struct entity ent, struct entity ent2);
+int take_damage(struct entity ent, int damage);
 bool is_alive(struct entity ent);
 Vector2 move_entity(struct entity ent, Vector2 move);

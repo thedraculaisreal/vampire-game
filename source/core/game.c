@@ -1,20 +1,20 @@
 #include "game.h"
 
-bool check_collision(struct entity ent, struct entity ent2)
+bool check_collision(Vector2 pos, Vector2 size, Vector2 pos1, Vector2 size1)
 {
     // make our rectangles for collision checks.
-    Rectangle vampire_rect;
-    vampire_rect.x = ent.pos.x;
-    vampire_rect.y = ent.pos.y;
-    vampire_rect.height = ent.size.y;
-    vampire_rect.width = ent.size.x;
-    Rectangle human_rect;
-    human_rect.x = ent2.pos.x;
-    human_rect.y = ent2.pos.y;
-    human_rect.height = ent2.size.y;
-    human_rect.width = ent2.size.x;
+    Rectangle rect;
+    rect.x = pos.x;
+    rect.y = pos.y;
+    rect.height = size.y;
+    rect.width = size.x;
+    Rectangle rect1;
+    rect1.x = pos1.x;
+    rect1.y = pos1.y;
+    rect1.height = size1.y;
+    rect1.width = size1.x;
 
-    return (CheckCollisionRecs(vampire_rect, human_rect)); // if collision, it returns true if not returns false.
+    return (CheckCollisionRecs(rect, rect1)); // if collision, it returns true if not returns false.
 }
 
 Vector2 movement(bool collision, Vector2 move)
