@@ -31,12 +31,12 @@ void init_raylib(void)
 
     // raylib initialization.
     InitWindow(window_width, window_height, window_name);
-
     while(!WindowShouldClose())
     {
 	entity_vampire.pos = movement(entity_vampire.pos); // takes keyboard input
 	if (!is_alive(entity_vampire) || !is_alive(entity_human)) break; // check if alive
 
+	// for right shooting bullet.
 	if (IsKeyPressed(KEY_A))
 	{
 	    bullet_a = create_bullet(bullet_a, entity_vampire, 4);
@@ -47,7 +47,21 @@ void init_raylib(void)
 	    if (check_collision(bullet_a.pos, bullet_a.size, entity_human.pos, entity_human.size))
 	    {
 		bullet_a.alive = false;
-		entity_human.health = take_damage(entity_human, 50); // 50 is amount of damage they take.
+		entity_human.health = take_damage(entity_human, 10);
+	    }
+	}
+	// for left shooting bullet.
+	if (IsKeyPressed(KEY_D))
+	{
+	    bullet_d = create_bullet(bullet_d, entity_vampire, -4);
+	}
+	if (bullet_d.alive)
+	{
+	    bullet_d.pos.x = bullet_position(bullet_d);
+	    if (check_collision(bullet_d.pos, bullet_d.size, entity_human.pos, entity_human.size))
+	    {
+		bullet_d.alive = false;
+		entity_human.health = take_damage(entity_human, 10);
 	    }
 	}
 
@@ -56,6 +70,7 @@ void init_raylib(void)
 	draw_entity(entity_vampire); // draw entities to screen
 	draw_entity(entity_human);
 	draw_bullet(bullet_a);
+	draw_bullet(bullet_d);
 
 	EndDrawing();
     }

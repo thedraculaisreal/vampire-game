@@ -26,7 +26,7 @@ Vector2 move_entity(struct entity ent, Vector2 move)
     ent.pos.x += move.x;
     ent.pos.y += move.y;
     return ent.pos;
-}
+};
 
 int take_damage(struct entity ent, int damage)
 {

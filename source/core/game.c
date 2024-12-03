@@ -44,8 +44,16 @@ const static Vector2 bullet_size = {10 , 5};
 struct bullet create_bullet(struct bullet b, struct entity ent, float change)
 {
     b.pos = ent.pos;
-    b.pos.x += ent.size.x + 1;
-    b.pos.y += ent.size.y / 2;
+    if (change > 0)
+    {
+	b.pos.x += ent.size.x + 1;
+	b.pos.y += ent.size.y / 2;
+    }
+    else
+    {
+	b.pos.x -= 11;
+	b.pos.y += ent.size.y / 2;
+    }
     b.size = bullet_size;
     b.x_change = change;
     b.alive = true;
