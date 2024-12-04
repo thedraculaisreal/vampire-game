@@ -50,6 +50,8 @@ void movement(entity* ent, entity* ent1)
 	if (check_collision_ent(ent, ent1))
 	{
 	    ent->pos.x -= 6.0;
+	    take_damage(ent, 1);
+	    take_damage(ent1, 1);
 	}
     }
     if (IsKeyDown(KEY_LEFT))
@@ -58,6 +60,8 @@ void movement(entity* ent, entity* ent1)
 	if (check_collision_ent(ent, ent1))
 	{
 	    ent->pos.x += 6.0;
+	    take_damage(ent, 1);
+	    take_damage(ent1, 1);
 	}
     }
     if (IsKeyDown(KEY_UP))
@@ -66,6 +70,8 @@ void movement(entity* ent, entity* ent1)
 	if (check_collision_ent(ent, ent1))
 	{
 	    ent->pos.y += 6.0;
+	    take_damage(ent, 1);
+	    take_damage(ent1, 1);
 	}
     }
     if (IsKeyDown(KEY_DOWN))
@@ -74,6 +80,8 @@ void movement(entity* ent, entity* ent1)
 	if (check_collision_ent(ent, ent1))
 	{
 	    ent->pos.y -= 6.0;
+	    take_damage(ent, 1);
+	    take_damage(ent1, 1);
 	}
     }
 }
