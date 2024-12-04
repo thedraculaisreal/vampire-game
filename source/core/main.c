@@ -33,7 +33,7 @@ void init_raylib(void)
     InitWindow(window_width, window_height, window_name);
     while(!WindowShouldClose())
     {
-	movement(&entity_vampire); // takes keyboard input
+	movement(&entity_vampire, &entity_human); // takes keyboard input
 	if (!is_alive(&entity_vampire) || !is_alive(&entity_human)) break; // check if alive
 
 	// for right shooting bullet.
@@ -44,7 +44,7 @@ void init_raylib(void)
 	if (bullet_a.alive)
 	{
 	    bullet_position(&bullet_a);
-	    check_collision(&bullet_a, &entity_human);
+	    check_collision_bul(&bullet_a, &entity_human);
 	}
 	// for left shooting bullet.
 	if (IsKeyPressed(KEY_D))
@@ -54,7 +54,7 @@ void init_raylib(void)
 	if (bullet_d.alive)
 	{
 	    bullet_position(&bullet_d);
-	    check_collision(&bullet_d, &entity_human);
+	    check_collision_bul(&bullet_d, &entity_human);
 	}
 
 	BeginDrawing();

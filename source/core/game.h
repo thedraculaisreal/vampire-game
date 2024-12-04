@@ -8,8 +8,9 @@ typedef struct bullet
     bool alive;
 } bullet;
 
-void check_collision(bullet* b, entity* ent);
-void movement(entity* ent);
+void check_collision_bul(bullet* b, entity* ent);
+void movement(entity* ent, entity* ent1);
 void draw_bullet(bullet* b);
 void create_bullet(bullet* b, entity* ent, float change);
 void bullet_position(bullet* b);
+bool check_collision_ent(entity* ent, entity* ent1);
