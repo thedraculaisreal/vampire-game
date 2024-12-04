@@ -1,73 +1,78 @@
 #include "game.h"
 
-bool check_collision(Vector2 pos, Vector2 size, Vector2 pos1, Vector2 size1)
+void check_collision(bullet* b, entity* ent)
 {
     // make our rectangles for collision checks.
     Rectangle rect;
-    rect.x = pos.x;
-    rect.y = pos.y;
-    rect.height = size.y;
-    rect.width = size.x;
+    rect.x = b->pos.x;
+    rect.y = b->pos.y;
+    rect.height = b->size.y;
+    rect.width = b->size.x;
     Rectangle rect1;
-    rect1.x = pos1.x;
-    rect1.y = pos1.y;
-    rect1.height = size1.y;
-    rect1.width = size1.x;
+    rect1.x = ent->pos.x;
+    rect1.y = ent->pos.y;
+    rect1.height = ent->size.y;
+    rect1.width = ent->size.x;
 
-    return CheckCollisionRecs(rect, rect1); // if collision, it returns true if not returns false.
+    if (CheckCollisionRecs(rect, rect1)) // if collision, it returns true if not returns false.
+    {
+	b->alive = false;
+	ent->health -= 10; // bullet damage
+    }
+    else
+    {
+	return;
+    }
 }
 
-Vector2 movement(Vector2 move)
+void movement(entity* ent)
 {
     if (IsKeyDown(KEY_RIGHT))
     {
-	move.x += 4.0;
+	ent->pos.x += 4.0;
     }
     if (IsKeyDown(KEY_LEFT))
     {
-	move.x -= 4.0;
+	ent->pos.x -= 4.0;
     }
     if (IsKeyDown(KEY_UP))
     {
-	move.y -= 4.0;
+	ent->pos.y -= 4.0;
     }
     if (IsKeyDown(KEY_DOWN))
     {
-	move.y += 4.0;
+	ent->pos.y += 4.0;
     }
-
-    return move;
 }
 
 const static Vector2 bullet_size = {10 , 5};
 
-struct bullet create_bullet(struct bullet b, struct entity ent, float change)
+void create_bullet(bullet* b, entity* ent, float change)
 {
-    b.pos = ent.pos;
+    b->pos = ent->pos;
     if (change > 0)
     {
-	b.pos.x += ent.size.x + 1;
-	b.pos.y += ent.size.y / 2;
+	b->pos.x += ent->size.x + 1;
+	b->pos.y += ent->size.y / 2;
     }
     else
     {
-	b.pos.x -= 11;
-	b.pos.y += ent.size.y / 2;
+	b->pos.x -= 11;
+	b->pos.y += ent->size.y / 2;
     }
-    b.size = bullet_size;
-    b.x_change = change;
-    b.alive = true;
-    return b;
+    b->size = bullet_size;
+    b->x_change = change;
+    b->alive = true;
 }
 
-void draw_bullet(struct bullet b)
+void draw_bullet(bullet* b)
 {
-    if (!b.alive) return;
+    if (!b->alive) return;
 
-    DrawRectangleV(b.pos, b.size, YELLOW);
+    DrawRectangleV(b->pos, b->size, YELLOW);
 }
 
-float bullet_position(struct bullet b)
+void bullet_position(bullet* b)
 {
-    return b.pos.x += b.x_change;
+    b->pos.x += b->x_change;
 }

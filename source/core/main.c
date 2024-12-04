@@ -14,10 +14,10 @@ void init_raylib(void)
 {
     const Vector2 pos1 = { 200, 200};
     const Vector2 pos2 = { 700, 200};
-    struct entity entity_human;
-    struct entity entity_vampire;
-    struct bullet bullet_a;
-    struct bullet bullet_d;
+    entity entity_human;
+    entity entity_vampire;
+    bullet bullet_a;
+    bullet bullet_d;
     SetTargetFPS(60); // set game fps.
 
     // Create entitys
@@ -33,44 +33,36 @@ void init_raylib(void)
     InitWindow(window_width, window_height, window_name);
     while(!WindowShouldClose())
     {
-	entity_vampire.pos = movement(entity_vampire.pos); // takes keyboard input
-	if (!is_alive(entity_vampire) || !is_alive(entity_human)) break; // check if alive
+	movement(&entity_vampire); // takes keyboard input
+	if (!is_alive(&entity_vampire) || !is_alive(&entity_human)) break; // check if alive
 
 	// for right shooting bullet.
 	if (IsKeyPressed(KEY_A))
 	{
-	    bullet_a = create_bullet(bullet_a, entity_vampire, 4);
+	    create_bullet(&bullet_a, &entity_vampire, 4);
 	}
 	if (bullet_a.alive)
 	{
-	    bullet_a.pos.x = bullet_position(bullet_a);
-	    if (check_collision(bullet_a.pos, bullet_a.size, entity_human.pos, entity_human.size))
-	    {
-		bullet_a.alive = false;
-		entity_human.health = take_damage(entity_human, 10);
-	    }
+	    bullet_position(&bullet_a);
+	    check_collision(&bullet_a, &entity_human);
 	}
 	// for left shooting bullet.
 	if (IsKeyPressed(KEY_D))
 	{
-	    bullet_d = create_bullet(bullet_d, entity_vampire, -4);
+	    create_bullet(&bullet_d, &entity_vampire, -4);
 	}
 	if (bullet_d.alive)
 	{
-	    bullet_d.pos.x = bullet_position(bullet_d);
-	    if (check_collision(bullet_d.pos, bullet_d.size, entity_human.pos, entity_human.size))
-	    {
-		bullet_d.alive = false;
-		entity_human.health = take_damage(entity_human, 10);
-	    }
+	    bullet_position(&bullet_d);
+	    check_collision(&bullet_d, &entity_human);
 	}
 
 	BeginDrawing();
 	ClearBackground(BLACK); // background color
-	draw_entity(entity_vampire); // draw entities to screen
-	draw_entity(entity_human);
-	draw_bullet(bullet_a);
-	draw_bullet(bullet_d);
+	draw_entity(&entity_vampire); // draw entities to screen
+	draw_entity(&entity_human);
+	draw_bullet(&bullet_a);
+	draw_bullet(&bullet_d);
 
 	EndDrawing();
     }
