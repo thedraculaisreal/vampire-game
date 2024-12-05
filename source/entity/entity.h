@@ -8,6 +8,7 @@ typedef struct entity
     int damage;
     Vector2 pos;
     Vector2 size;
+
 } entity;
 
 entity create_entity(const char* name, Vector2 pos);

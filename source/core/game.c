@@ -42,12 +42,12 @@ bool check_collision_ent(entity* ent, entity* ent1)
     return (CheckCollisionRecs(rect, rect1)); // if collision, it returns true if not returns false.
 }
 
-void movement(entity* ent, entity* ent1)
+void movement(entity* ent, entity* ent1, Rectangle (*rec)[8])
 {
     if (IsKeyDown(KEY_RIGHT))
     {
 	ent->pos.x += 4.0;
-	if (check_collision_ent(ent, ent1))
+	if (check_collision_ent(ent, ent1) || check_collision_walls(ent, rec))
 	{
 	    ent->pos.x -= 6.0;
 	    take_damage(ent, 1);
@@ -57,7 +57,7 @@ void movement(entity* ent, entity* ent1)
     if (IsKeyDown(KEY_LEFT))
     {
 	ent->pos.x -= 4.0;
-	if (check_collision_ent(ent, ent1))
+	if (check_collision_ent(ent, ent1) || check_collision_walls(ent, rec))
 	{
 	    ent->pos.x += 6.0;
 	    take_damage(ent, 1);
@@ -67,7 +67,7 @@ void movement(entity* ent, entity* ent1)
     if (IsKeyDown(KEY_UP))
     {
 	ent->pos.y -= 4.0;
-	if (check_collision_ent(ent, ent1))
+	if (check_collision_ent(ent, ent1) || check_collision_walls(ent, rec))
 	{
 	    ent->pos.y += 6.0;
 	    take_damage(ent, 1);
@@ -77,7 +77,7 @@ void movement(entity* ent, entity* ent1)
     if (IsKeyDown(KEY_DOWN))
     {
 	ent->pos.y += 4.0;
-	if (check_collision_ent(ent, ent1))
+	if (check_collision_ent(ent, ent1) || check_collision_walls(ent, rec)))
 	{
 	    ent->pos.y -= 6.0;
 	    take_damage(ent, 1);
@@ -143,4 +143,29 @@ Rectangle create_wall(int x, int y, float w, float h)
 {
     Rectangle rec = { x, y, w, h};
     return rec;
+}
+
+bool check_collision_walls(entity* ent, Rectangle (*rec)[8])
+{
+    for (int i = 0; i <= 7; i++)
+    {
+	if (check_collision_wall(ent, (*rec)[i]))
+	{
+	    return true;
+	}
+    }
+
+    return false;
+}
+
+bool check_collision_wall(entity* ent, Rectangle rect1)
+{
+    // make our rectangles for collision checks.
+    Rectangle rect;
+    rect.x = ent->pos.x;
+    rect.y = ent->pos.y;
+    rect.height = ent->size.y;
+    rect.width = ent->size.x;
+
+    return (CheckCollisionRecs(rect, rect1)); // if collision, it returns true if not returns false.
 }

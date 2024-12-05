@@ -34,7 +34,7 @@ void init_raylib(void)
     InitWindow(window_width, window_height, window_name);
     while(!WindowShouldClose())
     {
-	movement(&entity_vampire, &entity_human); // takes keyboard input
+	movement(&entity_vampire, &entity_human, &array_walls); // takes keyboard input
 	if (!is_alive(&entity_vampire) || !is_alive(&entity_human)) break; // check if alive
 
 	// for right shooting bullet.
