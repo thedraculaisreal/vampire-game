@@ -117,3 +117,36 @@ void bullet_position(bullet* b)
 {
     b->pos.x += b->x_change;
 }
+
+void draw_wall(Rectangle (*rec)[8])
+{
+    for(int i = 0; i < 4; i++)
+    {
+	DrawRectangleRec(*rec[i], YELLOW);
+    }
+}
+
+void create_walls(Rectangle (*rec)[8])
+{
+    /*rec[0]->x = 0; rec[0]->y = 750; rec[0]->width = 600; rec[0]->height = 50;
+    rec[1]->x = 800; rec[1]->y = 750; rec[1]->width = 600; rec[1]->height = 50;
+    rec[2]->x = 1350; rec[2]->y = 500; rec[2]->width = 50; rec[2]->height = 300;
+    rec[3]->x = 1350; rec[3]->y = 0; rec[3]->width = 50; rec[3]->height = 300;
+    rec[4]->x = 800; rec[4]->y = 0; rec[4]->width =
+    */
+
+    *rec[0] = create_wall(0, 750, 600, 50);
+    *rec[1] = create_wall(800, 750, 600, 50);
+    *rec[2] = create_wall(1350, 500, 50, 300);
+    *rec[3] = create_wall(1350, 0, 50, 300);
+    *rec[4] = create_wall(800, 0, 600, 50);
+    //*rec[5] = create_wall(0, 0, 600, 50);
+    //create_wall(rec[6], 0, 0, 50, 300);
+    //create_wall(rec[7], 0, 500, 50, 300);*/
+}
+
+Rectangle create_wall(int x, int y, float w, float h)
+{
+    Rectangle rec = { x, y, w, h};
+    return rec;
+}

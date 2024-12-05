@@ -14,6 +14,7 @@ void init_raylib(void)
 {
     const Vector2 pos1 = { 200, 200};
     const Vector2 pos2 = { 700, 200};
+    Rectangle array_walls[8];
     entity entity_human;
     entity entity_vampire;
     bullet bullet_a;
@@ -23,7 +24,7 @@ void init_raylib(void)
     // Create entitys
     entity_vampire = create_entity("vampire", pos1);
     entity_human = create_entity("human", pos2);
-
+    create_walls(&array_walls);
     // variables for window and rectangles
     const int window_width = 1400;
     const int window_height = 800;
@@ -59,6 +60,7 @@ void init_raylib(void)
 
 	BeginDrawing();
 	ClearBackground(BLACK); // background color
+	draw_wall(&array_walls);
 	draw_entity(&entity_vampire); // draw entities to screen
 	draw_entity(&entity_human);
 	draw_bullet(&bullet_a);
