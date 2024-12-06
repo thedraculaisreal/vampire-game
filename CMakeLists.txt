@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.31.1) # min required vers of cmake.
 set(PROJECT_NAME black) # project name & executable name
-set(SOURCE_FILES source/entity/entity.c source/core/main.c source/core/game.c ) # defining source files
+set(SOURCE_FILES source/entity/entity.c source/core/main.c source/core/game.c source/core/rooms.c ) # defining source files
 project(${PROJECT_NAME})
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})

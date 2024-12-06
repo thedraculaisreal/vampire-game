@@ -1,4 +1,4 @@
-#include "game.h"
+#include "rooms.h"
 #include <unistd.h>
 #include <pthread.h>
 
@@ -13,12 +13,13 @@ int main(void)
 void init_raylib(void)
 {
     const Vector2 pos1 = { 200, 200};
-    const Vector2 pos2 = { 700, 200};
+    const Vector2 pos2 = { 700, 400};
     Rectangle array_walls[8];
     entity entity_human;
     entity entity_vampire;
     bullet bullet_a;
     bullet bullet_d;
+    Rectangle door = { 600, 0, 200, 50};
     SetTargetFPS(60); // set game fps.
 
     // Create entitys
@@ -29,6 +30,7 @@ void init_raylib(void)
     const int window_width = 1400;
     const int window_height = 800;
     const char* window_name = "kill-humans";
+    bool switch_rooms = false;
 
     // raylib initialization.
     InitWindow(window_width, window_height, window_name);
@@ -58,15 +60,31 @@ void init_raylib(void)
 	    check_collision_bul(&bullet_d, &entity_human);
 	}
 
-	BeginDrawing();
-	ClearBackground(BLACK); // background color
-	draw_wall(&array_walls);
-	draw_entity(&entity_vampire); // draw entities to screen
-	draw_entity(&entity_human);
-	draw_bullet(&bullet_a);
-	draw_bullet(&bullet_d);
+	if (!switch_rooms)
+	{
+	    room_1(&bullet_a, &bullet_d, &array_walls, &entity_vampire, &entity_human, &door);
+	}
+	else
+	{
+	    room_2(&bullet_a, &bullet_d, &array_walls, &entity_vampire, &entity_human, &door);
+	}
 
-	EndDrawing();
+	if (check_collision_wall(&entity_vampire, door))
+	{
+	    switch_rooms = !switch_rooms;
+	    if (switch_rooms)
+	    {
+		door.x = 600; door.y = 750;
+		entity_vampire.pos.x = 700; entity_vampire.pos.y = 600;
+		entity_human.pos.x = 0; entity_human.pos.y = 0; entity_human.size.y = 0; // getting rid of ent1
+	    }
+	    else
+	    {
+		door.x = 600; door.y = 0;
+		entity_vampire.pos.x = 700; entity_vampire.pos.y = 100;
+		entity_human.pos = pos2; entity_human.size.y = 100; // getting rid of ent1
+	    }
+	}
     }
 
     // cleanup

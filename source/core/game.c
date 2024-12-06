@@ -47,41 +47,61 @@ void movement(entity* ent, entity* ent1, Rectangle (*rec)[8])
     if (IsKeyDown(KEY_RIGHT))
     {
 	ent->pos.x += 4.0;
-	if (check_collision_ent(ent, ent1) || check_collision_walls(ent, rec))
+	if (check_collision_ent(ent, ent1))
 	{
 	    ent->pos.x -= 6.0;
 	    take_damage(ent, 1);
 	    take_damage(ent1, 1);
 	}
+	if (check_collision_walls(ent, rec))
+	{
+	    ent->pos.x -= 6.0;
+	    take_damage(ent, 1);
+	}
     }
     if (IsKeyDown(KEY_LEFT))
     {
 	ent->pos.x -= 4.0;
-	if (check_collision_ent(ent, ent1) || check_collision_walls(ent, rec))
+	if (check_collision_ent(ent, ent1))
 	{
 	    ent->pos.x += 6.0;
 	    take_damage(ent, 1);
 	    take_damage(ent1, 1);
 	}
+	if (check_collision_walls(ent, rec))
+	{
+	    ent->pos.x += 6.0;
+	    take_damage(ent, 1);
+	}
     }
     if (IsKeyDown(KEY_UP))
     {
 	ent->pos.y -= 4.0;
-	if (check_collision_ent(ent, ent1) || check_collision_walls(ent, rec))
+	if (check_collision_ent(ent, ent1))
 	{
 	    ent->pos.y += 6.0;
 	    take_damage(ent, 1);
 	    take_damage(ent1, 1);
 	}
+	if (check_collision_walls(ent, rec))
+	{
+	    ent->pos.y += 6.0;
+	    take_damage(ent, 1);
+	}
     }
     if (IsKeyDown(KEY_DOWN))
     {
 	ent->pos.y += 4.0;
-	if (check_collision_ent(ent, ent1) || check_collision_walls(ent, rec)))
+	if (check_collision_ent(ent, ent1))
 	{
 	    ent->pos.y -= 6.0;
 	    take_damage(ent, 1);
 	    take_damage(ent1, 1);
+	}
+	if (check_collision_walls(ent, rec))
+	{
+	    ent->pos.y -= 6.0;
+	    take_damage(ent, 1);
 	}
     }
 }
